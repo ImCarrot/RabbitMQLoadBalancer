@@ -1,0 +1,20 @@
+{
+  "databaseDetails":
+  {
+    "IP": "127.0.0.1",
+    "BoltPort": 7687,
+    "HttpPort": 7474
+  },
+  "queueDetails":
+  {
+    "IP": "127.0.0.1",
+    "Port": 5672,
+    "Username": "mqadmin",
+    "Password": "mqadminpassword",
+    "ReadQueueName": "InputQ",
+    "WriteQueueName": "OutputQ",
+    "ErrorQueueName": "ExceptionQueue",
+    "MaxQueueClientCount": 5,
+    "BlockingLimit": 2000
+  }
+}
