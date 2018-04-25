@@ -58,13 +58,19 @@ def _translate_and_parse(self, message) -> tuple:
 consumer_count = 5
 
 
+def subprocess_main(stop_event):
+    instance = Operator(stop_event, _translate_and_parse, f'Operator: {time.time()}')
+    instance.initialize_operator()
+    instance.consume()
+
+
 def main():
+    stop_event = multiprocessing.Event()
     for count in range(consumer_count):
-        instance = Operator(_translate_and_parse, f'Operator: {time.time()}')
-        instance.initialize_operator()
-        process = Process(target=instance.consume)
+        process = Process(target=subprocess_main, args=(stop_event,))
         process.start()
 
 
 if __name__ == '__main__':
     main()
+    # NOTE: you could catch CTRL-C and set the stop event
