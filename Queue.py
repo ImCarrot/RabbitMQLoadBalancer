@@ -7,10 +7,11 @@ from Configuration.ConfigurationManager import ConfigurationManager
 
 class Operator(object):
 
-    def __init__(self, delegate: callable, identifier):
+    def __init__(self, stop_event, delegate: callable, identifier):
         """
         Create a new instance of the Operator and initialize the connections
         """
+        self._stop_event = stop_event
         self._queue_details = self._get_queue_details()
         self._host_ip = self._queue_details['IP']
         self._port = self._queue_details['Port']
@@ -70,6 +71,11 @@ class Operator(object):
                               properties=pika.BasicProperties(delivery_mode=2))  # make message persistent
 
     def _process_incoming_message(self, channel, method, properties, message):
+        if self._stop_event.is_set()
+            # TODO you may want to cancel consuming messages and
+            # exit this process at this point
+            pass
+
         self.is_busy = True
         processed_result, error_status, error_package = self._delegate(message)
 
